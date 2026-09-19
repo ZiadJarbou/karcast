@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://karcast.app/sitemap.xml

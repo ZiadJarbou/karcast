@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 760" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrative KarCast phone and car-screen visual</title>
+  <desc id="desc">An illustrative car display with navigation and media panels beside an Android phone.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0b1526"/>
+      <stop offset="1" stop-color="#09101d"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" x2="1">
+      <stop offset="0" stop-color="#1aa8ff"/>
+      <stop offset="1" stop-color="#47f3ff"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feColorMatrix in="blur" values="0 0 0 0 0.08 0 0 0 0 0.68 0 0 0 0 1 0 0 0 .55 0"/>
+      <feBlend in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <rect width="1120" height="760" rx="54" fill="url(#bg)"/>
+  <path d="M137 571c157-124 219-286 347-252 78 21 108 106 190 107 97 2 139-113 293-184" fill="none" stroke="#18365f" stroke-width="42" stroke-linecap="round"/>
+  <path d="M137 571c157-124 219-286 347-252 78 21 108 106 190 107 97 2 139-113 293-184" fill="none" stroke="url(#blue)" stroke-width="10" stroke-linecap="round" filter="url(#glow)"/>
+  <rect x="184" y="138" width="678" height="436" rx="42" fill="#0f1b2d" stroke="#31435e" stroke-width="8"/>
+  <rect x="219" y="179" width="608" height="354" rx="24" fill="#08111f"/>
+  <rect x="246" y="207" width="334" height="300" rx="22" fill="#101d30"/>
+  <path d="M282 450c58-63 83-138 142-122 39 10 49 54 91 55 34 1 53-23 78-49" fill="none" stroke="#48e0ff" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="424" cy="328" r="15" fill="#47f3ff"/>
+  <rect x="606" y="207" width="189" height="86" rx="18" fill="#14233a"/>
+  <rect x="629" y="230" width="72" height="10" rx="5" fill="#dbeafe"/>
+  <rect x="629" y="252" width="118" height="9" rx="4.5" fill="#6f89ad"/>
+  <rect x="606" y="317" width="189" height="86" rx="18" fill="#14233a"/>
+  <circle cx="650" cy="360" r="22" fill="url(#blue)"/>
+  <rect x="684" y="342" width="78" height="10" rx="5" fill="#dbeafe"/>
+  <rect x="684" y="365" width="54" height="9" rx="4.5" fill="#6f89ad"/>
+  <rect x="606" y="427" width="189" height="80" rx="18" fill="#14233a"/>
+  <rect x="636" y="461" width="128" height="12" rx="6" fill="#47f3ff"/>
+  <rect x="758" y="114" width="180" height="506" rx="38" fill="#0b1321" stroke="#30435d" stroke-width="7"/>
+  <rect x="778" y="159" width="140" height="414" rx="25" fill="#111d2f"/>
+  <rect x="797" y="188" width="102" height="12" rx="6" fill="#dbeafe"/>
+  <rect x="797" y="222" width="102" height="148" rx="17" fill="#08111f"/>
+  <path d="M817 331c24-36 43-48 66-82" fill="none" stroke="#47f3ff" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="852" cy="283" r="10" fill="#47f3ff"/>
+  <rect x="797" y="394" width="102" height="68" rx="16" fill="#17263d"/>
+  <rect x="815" y="422" width="67" height="9" rx="4.5" fill="#dbeafe"/>
+  <rect x="797" y="485" width="102" height="48" rx="16" fill="#17263d"/>
+  <text x="200" y="653" fill="#7891b5" font-family="Arial, sans-serif" font-size="24">Illustrative visual. Replace with real product screenshots when available.</text>
+</svg>

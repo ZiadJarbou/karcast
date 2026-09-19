@@ -8,7 +8,7 @@ This repository contains the KarCast marketing website: a bilingual English/Arab
 npm run dev
 ```
 
-The site runs at `http://localhost:4173` by default.
+The site runs at `http://localhost:3000` by default.
 
 ## Production Build
 

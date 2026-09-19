@@ -6,7 +6,7 @@ import { parse } from "node:url";
 
 const root = resolve(import.meta.dirname, "..");
 const publicDir = resolve(root, process.env.NODE_ENV === "production" ? "dist" : "public");
-const port = Number(process.env.PORT || 4173);
+const port = Number(process.env.PORT || 3000);
 
 const contacts = {
   general: "info@karcast.app",

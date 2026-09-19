@@ -2,9 +2,10 @@ import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import { createReadStream, existsSync } from "node:fs";
 import { extname, join, normalize, resolve } from "node:path";
-import { parse } from "node:url";
+import { fileURLToPath, parse } from "node:url";
 
-const root = resolve(import.meta.dirname, "..");
+const serverDir = resolve(fileURLToPath(new URL(".", import.meta.url)));
+const root = resolve(serverDir, "..");
 const publicDir = resolve(root, process.env.NODE_ENV === "production" ? "dist" : "public");
 const port = Number(process.env.PORT || 3000);
 
@@ -199,7 +200,7 @@ createServer(async (req, res) => {
   if (req.method === "GET" || req.method === "HEAD") return serveStatic(req, res);
   res.writeHead(405, { "content-type": "text/plain; charset=utf-8" });
   res.end("Method not allowed");
-}).listen(port, () => {
+}).listen(port, "0.0.0.0", () => {
   console.log(`KarCast preview running at http://localhost:${port}`);
   readFile(join(publicDir, "index.html")).catch(() => {
     console.warn(`No built site found in ${publicDir}. Run npm run build for production.`);

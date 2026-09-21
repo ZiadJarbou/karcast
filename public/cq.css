@@ -1,0 +1,177 @@
+/* KarCast container-query utilities
+   Use .cq on a parent. Query descendants — never the container itself. */
+
+:root {
+  --cq-xs: 20rem; /* ~320 */
+  --cq-sm: 28rem; /* ~448 */
+  --cq-md: 36rem; /* ~576 */
+  --cq-lg: 48rem; /* ~768 */
+  --cq-xl: 60rem; /* ~960 */
+  --cq-gap: 0.75rem;
+  --density: comfortable;
+  --tone: default;
+  --intent: market;
+  --cta: loud;
+  --featured: false;
+}
+
+/* Attribute bridges — set tokens without inline style="" */
+[data-density="compact"] { --density: compact; }
+[data-density="comfortable"] { --density: comfortable; }
+[data-density="roomy"] { --density: roomy; }
+[data-tone="default"] { --tone: default; }
+[data-tone="mint"] { --tone: mint; }
+[data-tone="warn"] { --tone: warn; }
+[data-tone="quiet"] { --tone: quiet; }
+[data-intent="market"] { --intent: market; }
+[data-intent="trust"] { --intent: trust; }
+[data-intent="help"] { --intent: help; }
+[data-cta="loud"] { --cta: loud; }
+[data-cta="quiet"] { --cta: quiet; }
+[data-featured] { --featured: true; }
+
+/* --- Establish containers --- */
+.cq,
+.cq-inline { container-type: inline-size; }
+.cq-size { container-type: size; }
+
+.cq-page { container-name: page; container-type: inline-size; }
+.cq-split { container-name: split; container-type: inline-size; }
+.cq-grid { container-name: grid; container-type: inline-size; }
+.cq-card { container-name: card; container-type: inline-size; }
+
+/* --- Grid primitives (1 col until a query upgrades them) --- */
+.cq-cols {
+  display: grid;
+  gap: var(--cq-gap);
+  grid-template-columns: 1fr;
+}
+
+.cq-split-stack {
+  display: grid;
+  gap: clamp(1.25rem, 3cqi, 2.5rem);
+  grid-template-columns: 1fr;
+}
+
+/* Size queries — nearest unnamed or matching named container */
+@container (min-width: 28rem) {
+  .cq-sm\:cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .cq-sm\:row { display: flex; flex-direction: row; align-items: center; }
+}
+
+@container (min-width: 36rem) {
+  .cq-md\:cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .cq-md\:cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .cq-md\:split { grid-template-columns: 1fr 1fr; }
+}
+
+@container (min-width: 48rem) {
+  .cq-lg\:cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .cq-lg\:cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .cq-lg\:split-wide { grid-template-columns: 1.05fr 0.95fr; }
+}
+
+@container (min-width: 60rem) {
+  .cq-xl\:cols-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Named: only fire inside .cq-page */
+@container page (min-width: 48rem) {
+  .cq-page\:hero { grid-template-columns: 1.05fr 0.95fr; }
+}
+
+@container page (min-width: 36rem) {
+  .cq-page\:split { grid-template-columns: 1fr 1fr; }
+}
+
+/* Named: card-level density of type using container units */
+@container card (min-width: 0px) {
+  .cq-type {
+    font-size: clamp(0.95rem, 3.4cqi, 1.05rem);
+  }
+  .cq-type-lg {
+    font-size: clamp(1.05rem, 4.2cqi, 1.35rem);
+  }
+}
+
+/* --- Style queries -----------------------------------------------
+   Query computed custom properties on an ancestor.
+   No container-type needed. Children never need a new class. */
+
+@container style(--density: compact) {
+  .card,
+  .price-card { padding: 14px 16px; }
+  .steps svg { margin: 8px 0; }
+  .section-lede { margin-bottom: 14px; }
+  .cq-cols { --cq-gap: 0.5rem; }
+}
+
+@container style(--density: comfortable) {
+  .card { padding: 22px; }
+  .cq-cols { --cq-gap: 0.75rem; }
+}
+
+@container style(--density: roomy) {
+  .card,
+  .price-card { padding: 28px 26px; }
+  .cq-cols { --cq-gap: 1.1rem; }
+  .section-lede { margin-bottom: 32px; }
+}
+
+@container style(--tone: mint) {
+  .card,
+  .price-card {
+    border-color: #1f8f6c;
+    box-shadow: 0 0 0 1px rgba(46, 230, 166, 0.14);
+  }
+  .eyebrow { color: var(--mint, #2ee6a6); }
+}
+
+@container style(--tone: warn) {
+  .card,
+  .safety,
+  .local-note {
+    border-color: #8a6a22;
+    background: #1a160c;
+    color: #f5d08a;
+  }
+}
+
+@container style(--tone: quiet) {
+  .card { background: transparent; }
+  .btn { background: transparent; color: var(--mint, #2ee6a6); border: 1px solid currentColor; }
+}
+
+@container style(--intent: trust) {
+  .fit-result { border: 1px solid #243044; }
+}
+
+@container style(--intent: help) {
+  .contact { gap: 16px; }
+}
+
+@container style(--cta: quiet) {
+  .btn { background: #121a28; color: #f4f7fb; border: 1px solid #243044; }
+}
+
+@container style(--featured: true) {
+  .card,
+  .price-card {
+    outline: 1px solid var(--mint, #2ee6a6);
+    outline-offset: 2px;
+  }
+}
+
+/* Size + style together: compact only when the slot is also narrow */
+@container (max-width: 36rem) and style(--density: compact) {
+  .cq-sm\:cols-2 { grid-template-columns: 1fr; }
+}
+
+/* Show / hide helpers inside a container */
+@container (max-width: 27.99rem) {
+  .cq-hide-xs { display: none !important; }
+}
+@container (min-width: 28rem) {
+  .cq-show-sm { display: revert; }
+  .cq-hide-sm-up { display: none !important; }
+}

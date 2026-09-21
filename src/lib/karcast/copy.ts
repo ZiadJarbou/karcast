@@ -1,4 +1,4 @@
-const copy = {
+export const copy = {
   en: {
     navHow: "How it works",
     navFit: "Compatibility",
@@ -6,6 +6,7 @@ const copy = {
     navPrice: "Pricing",
     navHelp: "Support",
     navCta: "Notify me",
+    playGet: "GET IT ON",
     eyebrow: "Made for compatible car browsers",
     heroTitle: "Android Auto on your car screen.",
     heroLede: "Connect your phone over Wi-Fi. Open one address. Drive with maps, music, and calls on the dash.",
@@ -44,6 +45,8 @@ const copy = {
     f2d: "Bring supported Android Auto media to the dash while the phone stays the source.",
     f3t: "Calls and a clear UI",
     f3d: "Keep the Android Auto interface in front, with setup language that stays short.",
+    f4t: "Receive and view notifications",
+    f4d: "See messages and alerts from the phone on the dash, in the same Android Auto notification list.",
     safety: "KarCast is for a parked setup and for driving only with your eyes on the road. Follow local traffic law. Do not browse or watch video while the car is moving.",
     priceEyebrow: "Pricing",
     priceTitle: "KarCast Monthly",
@@ -90,7 +93,7 @@ const copy = {
     dockCopy: "AED 5 / month",
     dockCta: "Notify me",
     waitOk: "You are on the list. We will email you when KarCast is on Google Play.",
-    contactOk: "Message saved on this device. For a real reply, email support@karcast.app.",
+    contactOk: "Your message has been sent to the KarCast team.",
   },
   ar: {
     navHow: "طريقة العمل",
@@ -99,6 +102,7 @@ const copy = {
     navPrice: "السعر",
     navHelp: "الدعم",
     navCta: "أبلغني",
+    playGet: "متوفر على",
     eyebrow: "مصمم لمتصفحات السيارات المتوافقة",
     heroTitle: "أندرويد أوتو على شاشة سيارتك.",
     heroLede: "اربط هاتفك عبر واي فاي. افتح عنواناً واحداً. استخدم الخرائط والموسيقى والمكالمات على لوحة القيادة.",
@@ -137,6 +141,8 @@ const copy = {
     f2d: "انقل وسائط أندرويد أوتو المدعومة إلى اللوحة بينما يبقى الهاتف المصدر.",
     f3t: "المكالمات وواجهة واضحة",
     f3d: "أبقِ واجهة أندرويد أوتو في المقدمة، بلغة إعداد قصيرة.",
+    f4t: "استقبال وعرض الإشعارات",
+    f4d: "شاهد الرسائل والتنبيهات من الهاتف على اللوحة، في قائمة إشعارات أندرويد أوتو نفسها.",
     safety: "كار كاست للإعداد وأنت متوقف، وللقيادة مع العينين على الطريق. التزم قانون المرور. لا تتصفح أو تشاهد فيديو أثناء الحركة.",
     priceEyebrow: "السعر",
     priceTitle: "كار كاست شهرياً",
@@ -187,121 +193,5 @@ const copy = {
   },
 };
 
-function applyLang(lang) {
-  const dict = copy[lang] || copy.en;
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-  document.querySelectorAll("[data-i18n]").forEach((el) => {
-    const key = el.getAttribute("data-i18n");
-    if (dict[key]) el.textContent = dict[key];
-  });
-  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
-    const key = el.getAttribute("data-i18n-placeholder");
-    if (dict[key]) el.setAttribute("placeholder", dict[key]);
-  });
-  document.querySelectorAll(".lang-btn").forEach((btn) => {
-    btn.classList.toggle("is-active", btn.dataset.lang === lang);
-  });
-  localStorage.setItem("karcast-lang", lang);
-  updateFit();
-}
-
-function currentDict() {
-  const lang = document.documentElement.lang === "ar" ? "ar" : "en";
-  return copy[lang];
-}
-
-function updateFit() {
-  const form = document.getElementById("fit-form");
-  const out = document.getElementById("fit-result");
-  if (!form || !out) return;
-  const boxes = [...form.querySelectorAll("input[type=checkbox]")];
-  const checked = boxes.filter((b) => b.checked).length;
-  const dict = currentDict();
-  out.classList.remove("ok", "warn");
-  if (checked === 0) {
-    out.textContent = dict.fitIdle;
-  } else if (checked === boxes.length) {
-    out.textContent = dict.fitOk;
-    out.classList.add("ok");
-  } else {
-    out.textContent = dict.fitWarn;
-    out.classList.add("warn");
-  }
-}
-
-document.querySelectorAll(".lang-btn").forEach((btn) => {
-  btn.addEventListener("click", () => applyLang(btn.dataset.lang));
-});
-
-const saved = localStorage.getItem("karcast-lang");
-if (saved === "ar" || saved === "en") applyLang(saved);
-
-const fit = document.getElementById("fit-form");
-if (fit) fit.addEventListener("change", updateFit);
-
-const menu = document.querySelector(".menu");
-const sheet = document.getElementById("sheet");
-function setMenu(open) {
-  if (!menu || !sheet) return;
-  sheet.classList.toggle("is-open", open);
-  sheet.hidden = !open;
-  menu.setAttribute("aria-expanded", String(open));
-  document.body.classList.toggle("nav-open", open);
-}
-if (menu && sheet) {
-  menu.addEventListener("click", () => setMenu(!sheet.classList.contains("is-open")));
-  sheet.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
-}
-
-const dock = document.getElementById("dock");
-const notify = document.getElementById("notify");
-if (dock && notify && "IntersectionObserver" in window) {
-  const io = new IntersectionObserver((entries) => {
-    dock.classList.toggle("is-hidden", entries[0].isIntersecting);
-  }, { threshold: 0.4 });
-  io.observe(notify);
-}
-
-document.querySelectorAll("form[data-form]").forEach((form) => {
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const kind = form.getAttribute("data-form");
-    const data = Object.fromEntries(new FormData(form).entries());
-    const status = form.querySelector("[data-form-status]");
-    const dict = currentDict();
-    const button = form.querySelector('button[type="submit"]');
-    const messageTypes = { general: "general", setup: "support", compat: "support", feedback: "suggestion" };
-    const payload = kind === "waitlist"
-      ? {
-          name: "Google Play waitlist",
-          email: data.email,
-          messageType: "general",
-          message: "Please notify me when KarCast is available on Google Play."
-        }
-      : {
-          name: data.name,
-          email: data.email,
-          messageType: messageTypes[data.type] || "general",
-          message: data.message
-        };
-
-    if (button) button.disabled = true;
-    if (status) status.textContent = "";
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      const result = await response.json();
-      if (!response.ok || !result.ok) throw new Error(result.message || "Unable to send your message.");
-      if (status) status.textContent = kind === "waitlist" ? dict.waitOk : dict.contactOk;
-      form.reset();
-    } catch (error) {
-      if (status) status.textContent = error.message || "Unable to send your message. Please email support@karcast.app.";
-    } finally {
-      if (button) button.disabled = false;
-    }
-  });
-});
+export type Lang = keyof typeof copy;
+export type CopyKey = keyof typeof copy.en;

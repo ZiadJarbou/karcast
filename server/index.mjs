@@ -6,7 +6,7 @@ import { fileURLToPath, parse } from "node:url";
 
 const serverDir = resolve(fileURLToPath(new URL(".", import.meta.url)));
 const root = resolve(serverDir, "..");
-const publicDir = resolve(root, process.env.NODE_ENV === "production" ? "dist" : "public");
+const publicDir = resolve(root, "dist");
 const port = Number(process.env.PORT || 3000);
 
 const contacts = {

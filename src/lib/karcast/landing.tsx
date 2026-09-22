@@ -261,7 +261,7 @@ export function KarCastLanding() {
               height={901}
               aria-label="Tesla Model Y cabin at night with Autopilot visualization and Android Auto at app.karcast.app."
             >
-              <source src="/videos/hero-bg.mp4?v=9" type="video/mp4" />
+              <source src="/videos/hero-bg-fixed-camera-loop.mp4?v=10" type="video/mp4" />
             </video>
             <div className="hero-copy wrap">
               <p className="eyebrow">{t.eyebrow}</p>

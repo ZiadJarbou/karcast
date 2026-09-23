@@ -185,16 +185,16 @@
 
 
 :root {
-  --bg: #070b14;
-  --bg-alt: #0c1220;
-  --card: #121a28;
-  --line: #243044;
-  --mint: #2ee6a6;
-  --mint-dim: #0f3d30;
-  --text: #f4f7fb;
-  --muted: #93a0b5;
-  --faint: #6b778c;
-  --ok: #2ee6a6;
+  --bg: #0B1014;
+  --bg-alt: #0B1014;
+  --card: #24282B;
+  --line: #303537;
+  --mint: #58BB6B;
+  --mint-dim: rgba(88, 187, 107, 0.14);
+  --ok: #58BB6B;
+  --text: #F1F3F4;
+  --muted: #8C9497;
+  --faint: #8C9497;
   --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
   --radius: 18px;
   --max: 1120px;

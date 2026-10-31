@@ -1,5 +1,6 @@
 export const copy = {
   en: {
+    privacyPolicy: "Privacy Policy",
     navHow: "How it works",
     navFit: "Compatibility",
     navSession: "In the car",
@@ -96,6 +97,7 @@ export const copy = {
     contactOk: "Your message has been sent to the KarCast team.",
   },
   ar: {
+    privacyPolicy: "سياسة الخصوصية",
     navHow: "طريقة العمل",
     navFit: "التوافق",
     navSession: "في السيارة",

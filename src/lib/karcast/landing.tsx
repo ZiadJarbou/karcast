@@ -521,6 +521,7 @@ export function KarCastLanding() {
             <a href="#price">{t.navPrice}</a>
             <a href="#help">{t.navHelp}</a>
             <a href="#fit">{t.navFit}</a>
+            <a href="/privacy">{t.privacyPolicy}</a>
           </nav>
         </div>
         <div className="wrap footer-fine">

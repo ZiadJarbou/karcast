@@ -4,4 +4,7 @@
     <loc>https://karcast.app/</loc>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://karcast.app/privacy</loc>
+  </url>
 </urlset>

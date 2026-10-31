@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
-import { createReadStream, existsSync } from "node:fs";
+import { createReadStream, existsSync, statSync } from "node:fs";
 import { extname, join, normalize, resolve } from "node:path";
 import { fileURLToPath, parse } from "node:url";
 
@@ -174,8 +174,11 @@ const mime = {
 function serveStatic(req, res) {
   const { pathname } = parse(req.url);
   const requested = pathname === "/" ? "/index.html" : decodeURIComponent(pathname);
-  const filePath = normalize(join(publicDir, requested));
-  if (!filePath.startsWith(publicDir) || !existsSync(filePath)) {
+  let filePath = normalize(join(publicDir, requested.replace(/\/+$/, "")));
+  if (filePath.startsWith(publicDir) && !extname(filePath) && existsSync(`${filePath}.html`)) {
+    filePath = `${filePath}.html`;
+  }
+  if (!filePath.startsWith(publicDir) || !existsSync(filePath) || !statSync(filePath).isFile()) {
     res.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
     res.end("Not found");
     return;
@@ -184,6 +187,10 @@ function serveStatic(req, res) {
     "content-type": mime[extname(filePath)] || "application/octet-stream",
     "x-content-type-options": "nosniff"
   });
+  if (req.method === "HEAD") {
+    res.end();
+    return;
+  }
   createReadStream(filePath).pipe(res);
 }
 
